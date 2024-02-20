@@ -39,7 +39,10 @@ class MarkovModel:
 
 
 class GrammerChecker:
-    """Instantiate an instance of the Python Language Tool wrapper."""
+    """
+    Instantiate an instance of the Python Language Tool wrapper. Not currently
+    used since it adds a significant performance cost.
+    """
 
     def __init__(self) -> None:
         self.tool = LanguageTool('en-US')
@@ -79,11 +82,8 @@ if __name__ == '__main__':
     clean_corpus = 'assets/corpusOfClassicsClean.txt'
     dirty_corpus = 'assets/corpusOfClassics.txt'
     model = MarkovModel(clean_corpus)
-    lang_tool = GrammerChecker()
 
     for _ in range(10):
         raw_sentence = model.gen_sentence()
-        clean_sentence = lang_tool.refine(raw_sentence)
-        print(clean_sentence)
+        print(raw_sentence)
     
-    lang_tool.close()
