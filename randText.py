@@ -6,6 +6,8 @@
 import zmq
 import markovify
 from random import randint
+from re import sub
+from language_tool_python import LanguageTool
 
 
 class MarkovModel:
@@ -32,10 +34,56 @@ class MarkovModel:
         Generate a sentence of a length between 50 and 250 characters.
         Returns the sentence as a string.
         """
-        n = randint(50, 250)
+        n = randint(50, 250) 
         return self.model.make_short_sentence(n)
 
 
+class GrammerChecker:
+    """Instantiate an instance of the Python Language Tool wrapper."""
+
+    def __init__(self) -> None:
+        self.tool = LanguageTool('en-US')
+
+    
+    def refine(self, sentence: str) -> str:
+        """Refine the grammer and spelling of a sentence."""
+        return self.tool.correct(sentence)
+
+
+    def close(self):
+        """Close the Language Tool gracefully."""
+        self.tool.close()
+
+
+
+def preprocess_corpus(input, output):
+    """
+    Remove all special characters from a .txt file. Specify the file path
+    of the text file to be modified as the input. Specify the file path of the
+    file you would like the cleaned version to go to as output.
+    Returns nothing.
+    """
+    with open(input, 'r') as input_file:
+        with open(output, 'w') as output_file:
+            for line in input_file:
+                cleaned_line = sub(r'[^\w\s.,?!"]', '', line)  # Remove all special chars but quotations
+                output_file.write(cleaned_line)
+
+
 if __name__ == '__main__':
-    model = MarkovModel('assets/corpusOfClassics.txt')
-    print(model.gen_sentence())
+    # input = 'assets/corpusOfClassics.txt'
+    # output = 'assets/corpusOfClassicsClean.txt'
+    # preprocess_corpus(input, output)
+
+
+    clean_corpus = 'assets/corpusOfClassicsClean.txt'
+    dirty_corpus = 'assets/corpusOfClassics.txt'
+    model = MarkovModel(clean_corpus)
+    lang_tool = GrammerChecker()
+
+    for _ in range(10):
+        raw_sentence = model.gen_sentence()
+        clean_sentence = lang_tool.refine(raw_sentence)
+        print(clean_sentence)
+    
+    lang_tool.close()
