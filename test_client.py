@@ -1,6 +1,7 @@
 import zmq
 import time
 
+
 context = zmq.Context()
 
 #  Socket to talk to server
@@ -15,3 +16,6 @@ while True:
     response = socket.recv()
     print(f'\n{response} \n')
     
+    if response == b'Stopping':
+        print('Stopping client.')
+        break

@@ -84,6 +84,7 @@ if __name__ == '__main__':
     print("Waiting on host 4000")
 
     while True:
+        valid_comm = [b'word', b'sentence', b'stop']
         request = socket.recv()
         print(f'Received request: {request}')
         # Requests can either be 'word' or 'sentence'
@@ -94,3 +95,11 @@ if __name__ == '__main__':
         if request == b'sentence':
             response = model.gen_sentence()
             socket.send_string(f'Random Sentence: {response}')
+        
+        if request == b'stop':
+            print('Stopping service.')
+            socket.send_string('Stopping')
+            break
+        
+        if request not in valid_comm:
+            socket.send_string('Invalid communication. Please use "word", "sentence", or "stop".')
