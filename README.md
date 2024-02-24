@@ -16,7 +16,7 @@ For this project, the author used a Python library called Markovify. This librar
 
 #### Random-Text-Generator File Structure:
 
-Random-Text-Generator (root) /n
+Random-Text-Generator (root) \n
 |
 |---assets
 |   	|---CLEANED_corpus.txt
