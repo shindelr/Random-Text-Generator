@@ -101,4 +101,6 @@ The file **test_client.py** contains a simple ZeroMQ "app" that anyone can use t
 
 ### UML Sequence Diagram
 **Note**: The below diagram is built specifically with the aforementioned Encryption Service program in mind.
+<img width="468" alt="image" src="https://github.com/shindelr/Random-Text-Generator/assets/129821483/8960f41d-e077-482b-bd60-cf5064e7bd40">
+
 
