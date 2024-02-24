@@ -91,7 +91,7 @@ while True:
 		break
 	
 	if request not in valid_comm:
-		socket.send_string('Invalid communication. Please use "word",                               "sentence", or "stop".')
+		socket.send_string('Invalid communication. Please use "word", "sentence", or "stop".')
 ```
 
 Please note again that there are three valid communication options: **`'word'`** , **`'sentence'`**, **`'stop'`**.  Prior to this communication loop opening, a Markov model is instantiated via the MarkovModel class. This occurs as soon as the program is booted up, allowing for very fast text generation.
